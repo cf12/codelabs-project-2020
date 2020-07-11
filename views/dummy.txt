@@ -1,0 +1,4 @@
+This folder is for ejs files
+
+
+P.S. We can delete these dummy text files, it wouldn't let me commit an empty folder
