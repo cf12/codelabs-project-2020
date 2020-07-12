@@ -19,12 +19,12 @@ app.use("/public", express.static(path.join(__dirname, "public")));
 
 //default route
 app.get("/", (req, res) => {
-  res.redirect("/public/html/index.html");
+  res.sendFile(path.join(__dirname, "public/html/index.html"));
 });
 
 //room route
 app.get("/chatroom", (req, res) => {
-  res.redirect("/public/html/chatroom.html");
+  res.sendFile(path.join(__dirname, "public/html/chatroom.html"));
 });
 
 //socket
