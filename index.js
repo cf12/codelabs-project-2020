@@ -15,16 +15,16 @@ app.set("view-engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 
 //set static folder to /public
-app.use(express.static(path.join(__dirname, "public")));
+app.use("/public", express.static(path.join(__dirname, "public")));
 
 //default route
 app.get("/", (req, res) => {
-  res.redirect("/html/index.html");
+  res.redirect("/public/html/index.html");
 });
 
 //room route
 app.get("/chatroom", (req, res) => {
-  res.redirect("/html/chatroom.html");
+  res.redirect("/public/html/chatroom.html");
 });
 
 //socket
