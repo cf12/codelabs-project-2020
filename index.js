@@ -9,22 +9,22 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 //use ejs
-app.set("view-engine", "ejs");
+//app.set("view-engine", "ejs");
 
 //request parser for post requests
 app.use(express.urlencoded({ extended: true }));
 
 //set static folder to /public
-app.use(express.static(path.join(__dirname, "/public")));
+app.use(express.static(path.join(__dirname, "public")));
 
 //default route
 app.get("/", (req, res) => {
-  res.render("index.ejs");
+  res.redirect("/html/index.html");
 });
 
 //room route
 app.get("/room", (req, res) => {
-  res.render("room.ejs");
+  res.redirect("/html/chatroom.html");
 });
 
 const PORT = process.env.PORT || 5000;
