@@ -95,12 +95,12 @@ app.use(passport.session());
 
 //default route
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public/html/index.html"));
+  res.render("index.ejs");
 });
 
 //room route
 app.get("/chatroom", (req, res) => {
-  res.sendFile(path.join(__dirname, "public/html/chatroom.html"));
+  res.render("chatroom.ejs");
 });
 
 //login post authenticate with passport
