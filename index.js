@@ -39,6 +39,12 @@ const comparePassword = function (pw1, pw2) {
   //replace with bcrypt compare later
   return pw1 === pw2;
 };
+const addUser = function (username, password) {
+  //replace with database insert later
+  let user = { username: username, password: password, id: users.length };
+  users.push(user);
+  return user;
+};
 
 //local strategy for authentication
 passport.use(
@@ -105,6 +111,36 @@ app.post(
     failureRedirect: "/login",
   })
 );
+
+//register create account and login user
+app.post("/register", (req, res) => {
+  //check for empty fields
+  if (!req.body.username || !req.body.password) {
+    console.log("field empty");
+    res.redirect("/register");
+  }
+  //check if username taken
+  else if (
+    users.find((user) => {
+      return user.username === req.body.username;
+    })
+  ) {
+    res.redirect("/register");
+  }
+  //success
+  else {
+    //create account
+    let addedUser = addUser(req.body.username, req.body.password);
+
+    //log in
+    req.login(addedUser, function (err) {
+      if (err) {
+        return next(err);
+      }
+      return res.redirect("/");
+    });
+  }
+});
 
 //socket
 io.on("connection", (socket) => {
