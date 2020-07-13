@@ -3,6 +3,8 @@ const path = require("path");
 const socketio = require("socket.io");
 const express = require("express");
 const session = require("express-session");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
 
 const app = express();
 const server = http.createServer(app);
@@ -12,10 +14,78 @@ const io = socketio(server);
 app.set("view-engine", "ejs");
 
 //request parser for post requests
-app.use(express.urlencoded({ extended: true }));
+app.use(require("body-parser").urlencoded({ extended: true }));
 
 //set static folder to /public
 app.use("/public", express.static(path.join(__dirname, "public")));
+
+//temporary list of users, to be replaced with database requests
+const users = [{ username: "user1", password: "pword", id: 0 }];
+
+//get user by username
+const getUserByUsername = function (username, callback) {
+  let user = users.find((user) => {
+    return user.username === username;
+  });
+  callback(user, null);
+};
+const getUserById = function (id, callback) {
+  let user = users.find((user) => {
+    return user.id === id;
+  });
+  callback(user, null);
+};
+const comparePassword = function (pw1, pw2) {
+  //replace with bcrypt compare later
+  return pw1 === pw2;
+};
+
+//local strategy for authentication
+passport.use(
+  new LocalStrategy((username, password, done) => {
+    getUserByUsername(username, (user, err) => {
+      if (err) {
+        return done(err);
+      }
+      if (!user) {
+        return done(null, false, { message: "no user with that username" });
+      }
+      if (comparePassword(user.password, password)) {
+        return done(null, user);
+      } else {
+        return done(null, false, { message: "incorrect password" });
+      }
+    });
+  })
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  getUserById(id, (user, err) => {
+    if (err) return done(err);
+    done(null, user);
+  });
+});
+
+//init session
+const sessionMiddleware = session({
+  secret: "super secret",
+  resave: false,
+  saveUninitialized: false,
+});
+app.use(sessionMiddleware);
+
+//share sessions with sockets
+io.use((socket, next) => {
+  sessionMiddleware(socket.request, {}, next);
+});
+
+//use passport and connect to session
+app.use(passport.initialize());
+app.use(passport.session());
 
 //default route
 app.get("/", (req, res) => {
@@ -26,6 +96,15 @@ app.get("/", (req, res) => {
 app.get("/chatroom", (req, res) => {
   res.sendFile(path.join(__dirname, "public/html/chatroom.html"));
 });
+
+//login post authenticate with passport
+app.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login",
+  })
+);
 
 //socket
 io.on("connection", (socket) => {
