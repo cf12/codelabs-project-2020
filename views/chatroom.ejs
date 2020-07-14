@@ -1,36 +1,103 @@
 <html>
-    <link rel="stylesheet" href="/public/html/chatroom.scss">
-    <script src="/public/html/chatroom.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200&display=swap" rel="stylesheet">
-    
-    <header>
-        <div class="header">
-            <title>Chatroom || [Placeholder]</title>
-            <img src="#" href="/public/html/index.html">
-            <ul> 
-                <li>Home <a href="#"></a></li>
-                <li>Chat <a href="#"></a></li>
-                <li>Login <a href="#"></a></li>
-            </ul>
-        </div>
-    </header>
+  <link rel="stylesheet" href="/public/html/chatroom.scss" />
+  <script src="/public/html/chatroom.js"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200&display=swap"
+    rel="stylesheet"
+  />
 
-    <body> 
+  <header>
+    <div class="header">
+      <title>Chatroom || [Placeholder]</title>
+      <img src="#" href="/public/html/index.html" />
+      <ul>
+        <li>Home <a href="#"></a></li>
+        <li>Chat <a href="#"></a></li>
+        <li>Login <a href="#"></a></li>
+      </ul>
+    </div>
+  </header>
+
+  <body>
+    <div class="chat-output" id="chat-output">
+      <div class="user-message">
+        <div class="message">Hi! I'm a bot. What's up?</div>
+      </div>
+    </div>
+
+    <div class="chat-input">
+      <form action="#0" id="user-input-form">
+        <input
+          type="text"
+          id="user-input"
+          class="user-input"
+          placeholder="Talk to the bot."
+        />
+      </form>
+    </div>
+  </body>
+
+  <footer></footer>
+</html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/public/css/chatroom.scss" />
+    <link rel="stylesheet" href="/public/css/chatroom.css" />
+    <link rel="stylesheet" href="/public/css/chatroom.scss.map" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/public/js/chatroom.js"></script>
+
+    <title>Chatroom || [Project's Name]</title>
+
+    <div class="navbar">
+      <figure>
+        <img src="#" />
+      </figure>
+
+      <div class="tabs">
+        <h5>Home <a href="/public/html/index.html"></a></h5>
+        <h5>Chatroom <a href="/public/html/chatroom.html"></a></h5>
+        <h5>Register <a href="/public/html/register.html"></a></h5>
+      </div>
+    </div>
+  </head>
+
+  <body>
+    <div class="body">
       <div class="chat-output" id="chat-output">
         <div class="user-message">
           <div class="message">Hi! I'm a bot. What's up?</div>
         </div>
       </div>
-      
+
       <div class="chat-input">
         <form action="#0" id="user-input-form">
-          <input type="text" id="user-input" class="user-input" placeholder="Talk to the bot.">
+          <input
+            type="text"
+            id="user-input"
+            class="user-input"
+            placeholder="Talk to the bot."
+          />
         </form>
       </div>
-    </body>
+    </div>
+  </body>
 
-    <footer>
-        
-    </footer>
-
+  <footer>
+    <h6>Chatroom || [Project's Name]</h6>
+    <li>
+      <ul>
+        Home
+        <a href="/public/html/index.html"> </a>
+      </ul>
+      <ul>
+        Chatroom
+        <a href="/public/html/chatroom.html"> </a>
+      </ul>
+      <ul>
+        Register
+        <a href="/public/html/register.html"> </a>
+      </ul>
+    </li>
+  </footer>
 </html>
