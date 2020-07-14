@@ -24,7 +24,10 @@ app.use(require("body-parser").urlencoded({ extended: true }));
 app.use("/public", express.static(path.join(__dirname, "public")));
 
 //temporary list of users, to be replaced with database requests
-const users = [{ username: "user1", password: "pword", id: 0 }];
+const users = [
+  { username: "user1", password: "pword", id: 0 },
+  { username: "0", password: "0", id: 1 },
+];
 
 //get user by username
 const getUserByUsername = function (username, callback) {
@@ -183,7 +186,13 @@ io.on("connection", (socket) => {
   console.log("socket connected");
 });
 
-const rooms = [{ name: "main room", id: 0 }];
+const rooms = [
+  { name: "main room", id: 0 },
+  { name: "room 2", id: 1 },
+  { name: "room 3", id: 2 },
+  { name: "room 4", id: 3 },
+  { name: "room 5", id: 4 },
+];
 
 //socket channel for /chatroom
 chatRoom = io.of("/chatroom");
