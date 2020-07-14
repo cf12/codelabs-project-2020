@@ -1,0 +1,7 @@
+<h1>Create Account</h1>
+<form method="POST" action="/register">
+  <input name="username" placeholder="Username" />
+  <input type="password" name="password" placeholder="Password" />
+  <input type="submit" />
+</form>
+<p id="error"><% if(typeof error !== "undefined"){ %><%= error %><% } %></p>
