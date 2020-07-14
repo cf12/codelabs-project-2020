@@ -9,19 +9,20 @@ $("#user-input-form").on("submit", function(e) {
   outputArea.append(`
     <div class='bot-message'>
       <div class='message'>
+        hiii as well
         ${message}
       </div>
     </div>
   `);
   
   setTimeout(function() {
-    outputArea.append(
+    outputArea.append(`
       <div class='user-message'>
         <div class='message'>
-          BLAH
+          Heyloooowww
         </div>
       </div>
-    );
+    `);
   }, 250);
   
   $("#user-input").val("");

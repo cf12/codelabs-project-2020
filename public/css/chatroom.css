@@ -1,7 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700);
 * {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html {
@@ -16,11 +15,9 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
   font-size: 115%;
   display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
           flex-direction: column;
   max-width: 700px;
   margin: 0 auto;
@@ -28,36 +25,28 @@ body {
 
 .chat-output {
   -webkit-box-flex: 1;
-      -ms-flex: 1;
           flex: 1;
   padding: 20px;
   display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   background: white;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
           flex-direction: column;
 }
-
 .chat-output > div {
   margin: 0 0 20px 0;
 }
-
 .chat-output .user-message .message {
   background: #0FB0DF;
   color: white;
 }
-
 .chat-output .bot-message {
   text-align: right;
 }
-
 .chat-output .bot-message .message {
   background: #eee;
 }
-
 .chat-output .message {
   display: inline-block;
   padding: 12px 20px;
@@ -70,7 +59,6 @@ body {
   border: 1px solid #ccc;
   border-bottom: 0;
 }
-
 .chat-input .user-input {
   width: 100%;
   font-size: 2rem;
@@ -78,4 +66,3 @@ body {
   border-radius: 4px;
   padding: 8px;
 }
-/*# sourceMappingURL=chatroom.css.map */
