@@ -1,6 +1,5 @@
-var outputArea = $("#chat-output");
-
 $("document").ready(() => {
+  var outputArea = $("#chat-output");
   $("#user-input-form").on("submit", function (e) {
     e.preventDefault();
 
