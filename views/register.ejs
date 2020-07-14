@@ -2,7 +2,6 @@
 <form method="POST" action="/register">
   <input name="username" placeholder="Username" />
   <input type="password" name="password" placeholder="Password" />
-  <input name="email" placeholder="Email" />
   <input type="submit" />
 </form>
-<p id="error">{%= error %}</p>
+<p id="error"><% if(typeof error !== "undefined"){ %><%= error %><% } %></p>

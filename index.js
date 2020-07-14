@@ -5,6 +5,7 @@ const express = require("express");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+const flash = require("express-flash");
 
 const app = express();
 const server = http.createServer(app);
@@ -12,6 +13,9 @@ const io = socketio(server);
 
 //use ejs
 app.set("view-engine", "ejs");
+
+//use flash
+app.use(flash());
 
 //request parser for post requests
 app.use(require("body-parser").urlencoded({ extended: true }));
@@ -54,12 +58,12 @@ passport.use(
         return done(err);
       }
       if (!user) {
-        return done(null, false, { message: "no user with that username" });
+        return done(null, false, { message: "Incorrect username or password" });
       }
       if (comparePassword(user.password, password)) {
         return done(null, user);
       } else {
-        return done(null, false, { message: "incorrect password" });
+        return done(null, false, { message: "Incorrect username or password" });
       }
     });
   })
@@ -109,15 +113,25 @@ app.post(
   passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/login",
+    failureFlash: true,
   })
 );
+
+//login route
+app.get("/login", (req, res) => {
+  res.render("login.ejs");
+});
+
+//register route
+app.get("/register", (req, res) => {
+  res.render("register.ejs");
+});
 
 //register create account and login user
 app.post("/register", (req, res) => {
   //check for empty fields
   if (!req.body.username || !req.body.password) {
-    console.log("field empty");
-    res.redirect("/register");
+    res.render("register.ejs", { error: "FIll all fields" });
   }
   //check if username taken
   else if (
@@ -125,7 +139,7 @@ app.post("/register", (req, res) => {
       return user.username === req.body.username;
     })
   ) {
-    res.redirect("/register");
+    res.render("register.ejs", { error: "Username is taken" });
   }
   //success
   else {
