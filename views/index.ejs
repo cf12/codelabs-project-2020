@@ -1,77 +1,158 @@
-<html>
-  <head>
-    <link rel="stylesheet" href="/public/css/index.css" />
-    <script src="/public/js/index.js"></script>
+<!DOCTYPE html>
 
-    <title>Home || [Project's Name]</title>
+<html lang="en">
 
-    <div class="navbar">
-      <figure>
-        <img src="#" />
-      </figure>
+<head>
+    <meta charset="UTF-8">
 
-      <div class="tabs">
-        <h5>Home <a href="index.ejs"></a></h5>
-        <h5>Chatroom <a href="chatroom.ejs"></a></h5>
-        <h5>Register <a href="register.ejs"></a></h5>
+    <!-- Link here -->
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="public/css/indexstyle.css">
+
+    <script src="public/js/index.js"></script>
+    <!-- Link here ends -->
+
+</head>
+
+
+
+<!-- Nav Bar -->
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.ejs">Roomify</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="index.ejs">Home
+                  <span class="sr-only">(current)</span>
+                </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="chatroom.ejs">Chatroom</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="register.ejs">Register Now</a>
+          </li>
+        </ul>
       </div>
     </div>
-  </head>
+</nav>
 
-  <body>
-<a href="/newroom">Create New Room</a>
-    <h1>Join the live chats</h1>
-    <p>Lorem ipsum</p>
-
-    <table>
-      <tr>
-        <% for(var i=0;i<rooms.length;i++){ %>
-          <td>
-            <h3><%= rooms[i].id %></h3>
-            <figure>
-              <img src="">
-            </figure>
-            <h4><%= rooms[i].name %></h4>
-            <h5><%= rooms[i].description %></h5>
-            <p>Lorem ipsum</p>
-            <button type="button">
-              <a href="/chatroom?rid=<%= rooms[i].id %>">Join Now!</a>
-            </button>
-          </td>
-            <% if((i+1)%3 === 0){ %>
-            </tr><tr>
-              <% } %>
-        <% } %>
-            </tr>
-    </table>
+<!-- Navbar ends here -->
 
 
-    <figure>
-      <img src="#">
-      <h4>Placeholder</h4>
-      <p>Placeholder for description</p>
-      <button type="button">
-        <a href="#">Join Now!</a>
-      </button>
-    </figure>
+<!-- Remember to add buttons and proper descriptions! -->
 
-  </body>
 
-  <footer>
-    <h6>Home || [Project's Name]</h6>
-    <li>
-      <ul>
-        Home
-        <a href="index.ejs"> </a>
-      </ul>
-      <ul>
-        Chatroom
-        <a href="chatroom.ejs"> </a>
-      </ul>
-      <ul>
-        Register
-        <a href="register.ejs"> </a>
-      </ul>
-    </li>
-  </footer>
-</html>
+<body>
+    <!-- Page Content -->
+    <div class="container">
+
+    <!-- Page Content ends here -->
+
+        <!-- Page Heading -->
+
+        <p></p>
+        <h1 class="my-4"><br> Roomify <br>
+        <small>Choose the chatrooms now!</small>
+        </h1>
+
+        <!-- Page Heading ends here -->
+
+        <!-- Rows -->
+    
+        <div class="row">
+        <div class="col-lg-4 col-sm-6 mb-4">
+            <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+            <div class="card-body">
+                <h4 class="card-title">
+                <a href="#">Chatroom 1</a>
+                </h4>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur eum quasi sapiente nesciunt? Voluptatibus sit, repellat sequi itaque deserunt, dolores in, nesciunt, illum tempora ex quae? Nihil, dolorem!</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-6 mb-4">
+            <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+            <div class="card-body">
+                <h4 class="card-title">
+                <a href="#">Chatroom 2</a>
+                </h4>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-6 mb-4">
+            <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+            <div class="card-body">
+                <h4 class="card-title">
+                <a href="#">Chatroom 3</a>
+                </h4>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos quisquam, error quod sed cumque, odio distinctio velit nostrum temporibus necessitatibus et facere atque iure perspiciatis mollitia recusandae vero vel quam!</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-6 mb-4">
+            <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+            <div class="card-body">
+                <h4 class="card-title">
+                <a href="#">Chatroom 4</a>
+                </h4>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-6 mb-4">
+            <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+            <div class="card-body">
+                <h4 class="card-title">
+                <a href="#">Chatroom 5</a>
+                </h4>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-6 mb-4">
+            <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+            <div class="card-body">
+                <h4 class="card-title">
+                <a href="#">Chatroom 6</a>
+                </h4>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque earum nostrum suscipit ducimus nihil provident, perferendis rem illo, voluptate atque, sit eius in voluptates, nemo repellat fugiat excepturi! Nemo, esse.</p>
+            </div>
+            </div>
+        </div>
+        </div>
+        <!-- /.row -->
+
+
+        <!-- Page Heading -->
+
+        <p></p>
+        <h1 class="my-4"><br> <br>
+        <small>Create new rooms</small>
+        </h1>
+
+        <!-- Page Heading ends here -->
+
+    </div>    
+</body>
+
+<!-- Footer -->
+<footer id="sticky-footer" class="py-4 bg-dark text-white-50">
+    <div class="container text-center">
+      <small>Copyright &copy; Roomify 2020 </small>
+    </div>
+</footer>

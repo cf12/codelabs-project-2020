@@ -1,149 +1,107 @@
-<!-- 
-<html>
-  <link rel="stylesheet" href="/public/html/chatroom.scss" />
-  <script src="/public/html/chatroom.js"></script>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200&display=swap"
-    rel="stylesheet"
-  />
+<!DOCTYPE html>
 
-  <header>
-    <div class="header">
-      <title>Chatroom || [Placeholder]</title>
-      <img src="#" href="/public/html/index.html" />
-      <ul>
-        <li>Home <a href="#"></a></li>
-        <li>Chat <a href="#"></a></li>
-        <li>Login <a href="#"></a></li>
-      </ul>
-    </div>
-  </header>
+<html lang="en">
 
-  <body>
-    <div class="chat-output" id="chat-output">
-      <div class="user-message">
-        <div class="message">Hi! I'm a bot. What's up?</div>
-      </div>
-    </div>
+<head>
+    <meta charset="UTF-8">
 
-    <div class="chat-input">
-      <form action="#0" id="user-input-form">
-        <input
-          type="text"
-          id="user-input"
-          class="user-input"
-          placeholder="Talk to the bot."
-        />
-      </form>
-    </div>
-  </body>
+    <!-- Link here -->
 
-  <footer></footer>
-</html>
-<html>
-  <head>
-    <link rel="stylesheet" href="/public/css/chatroom.scss" />
-    <link rel="stylesheet" href="/public/css/chatroom.css" />
-    <link rel="stylesheet" href="/public/css/chatroom.scss.map" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="/public/js/chatroom.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="public/css/chatroomstyle.css">
+    <link rel="stylesheet" href="public/css/chatroom.scss" />
+    <link rel="stylesheet" href="public/css/chatroom.css" />
 
-    <title>Chatroom || [Project's Name]</title>
-
-    <div class="navbar">
-      <figure>
-        <img src="#" />
-      </figure>
-
-      <div class="tabs">
-        <h5>Home <a href="/public/html/index.html"></a></h5>
-        <h5>Chatroom <a href="/public/html/chatroom.html"></a></h5>
-        <h5>Register <a href="/public/html/register.html"></a></h5>
-      </div>
-    </div>
-  </head>
-
-  <body>
-    <div class="body">
-      <div class="chat-output" id="chat-output">
-        <div class="user-message">
-          <div class="message">Hi! I'm a bot. What's up?</div>
-        </div>
-      </div>
-
-      <div class="chat-input">
-        <form action="#0" id="user-input-form">
-          <input
-            type="text"
-            id="user-input"
-            class="user-input"
-            placeholder="Talk to the bot."
-          />
-        </form>
-      </div>
-    </div>
-  </body>
-
-  <footer>
-    <h6>Chatroom || [Project's Name]</h6>
-    <li>
-      <ul>
-        Home
-        <a href="/public/html/index.html"> </a>
-      </ul>
-      <ul>
-        Chatroom
-        <a href="/public/html/chatroom.html"> </a>
-      </ul>
-      <ul>
-        Register
-        <a href="/public/html/register.html"> </a>
-      </ul>
-    </li>
-  </footer>
-</html>
--->
-
-<html>
-  <head>
-    <link rel="stylesheet" href="/public/css/chatroom.scss" />
-    <link rel="stylesheet" href="/public/css/chatroom.css" />
-    <!-- <script src="/public/js/chatroomb.js"></script> -->
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="/public/js/chatroom.js"></script>
+    <script src="public/js/chatroom.js"></script>
 
-    <div class="header">
-      <title>Chatroom || [Placeholder]</title>
-      <img src="#" href="/public/html/index.html" />
-      <ul>
-        <li>Home <a href="#"></a></li>
-        <li>Chat <a href="#"></a></li>
-        <li>Login <a href="#"></a></li>
-      </ul>
+    <!-- Link here ends -->
+
+</head>
+
+
+
+<!-- Nav Bar -->
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.ejs">Roomify</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="index.ejs">Home
+                  <span class="sr-only">(current)</span>
+                </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="chatroom.ejs">Chatroom</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="register.ejs">Register Now</a>
+          </li>
+        </ul>
+      </div>
     </div>
+</nav>
 
-  </head>
+<!-- Navbar ends here -->
 
-  <body>
-    <div class="chat-output" id="chat-output">
-      <!--<div class="user-message">
-        <div class="message">Hiiiiii</div>
-      </div>-->
-    </div>
+<!-- Remember to add buttons and proper descriptions! -->
 
-    <div class="chat-input">
-      <form action="#0" id="user-input-form">
-        <input
-          type="text"
-          id="user-input"
-          class="user-input"
-          placeholder="Talk to the person!"
-        />
-      </form>
-    </div>
-  </body>
 
-  <footer></footer>
-</html>
+<body>
+  <!-- Page Content -->
+  <div class="container">
+
+  <!-- Page Content ends here -->
+
+      <!-- Page Heading -->
+
+      <p></p>
+      <h1 class="my-4"><br> Roomify <br>
+      <small>You have joined a room</small>
+      </h1>
+
+      <!-- Page Heading ends here -->
+
+      <!-- Chatroom -->
+  
+      <div class="row">
+        <div class="col-lg-4 col-sm-6 mb-4">
+          <div class="chat-output" id="chat-output">
+            <!--<div class="user-message">
+              <div class="message">Hiiiiii</div>
+            </div>-->
+          </div>
+      
+          <div class="chat-input">
+            <form action="#0" id="user-input-form">
+              <input
+                type="text"
+                id="user-input"
+                class="user-input"
+                placeholder="Talk to the person!"
+              />
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chatroom ends -->
+
+  </div>    
+</body>
+
+<!-- Footer -->
+<footer id="sticky-footer" class="py-4 bg-dark text-white-50">
+  <div class="container text-center">
+    <small>Copyright &copy; Roomify 2020 </small>
+  </div>
+</footer>
+

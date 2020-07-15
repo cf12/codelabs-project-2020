@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="/public/css/index.css" />
+    <script src="/public/js/index.js"></script>
+
+    <title>Home || [Project's Name]</title>
+
+    <div class="navbar">
+      <figure>
+        <img src="#" />
+      </figure>
+
+      <div class="tabs">
+        <h5>Home <a href="index.ejs"></a></h5>
+        <h5>Chatroom <a href="chatroom.ejs"></a></h5>
+        <h5>Register <a href="register.ejs"></a></h5>
+      </div>
+    </div>
+  </head>
+
+  
+  <body>
+
+    <h1>Log In</h1>
+    <form method="POST" action="/login">
+      <input name="username" placeholder="Username" />
+      <input type="password" name="password" placeholder="Password" />
+      <input type="submit" />
+    </form>
+    <p id="error"><% if(messages.error){ %> <%= messages.error %> <% } %></p>
+
+  </body>
+
+
+  <footer>
+    <h6>Chatroom || [Project's Name]</h6>
+    <li>
+      <ul>
+        Home
+        <a href="/public/html/index.html"> </a>
+      </ul>
+      <ul>
+        Chatroom
+        <a href="/public/html/chatroom.html"> </a>
+      </ul>
+      <ul>
+        Register
+        <a href="/public/html/register.html"> </a>
+      </ul>
+    </li>
+  </footer>
+
+</html>
+
