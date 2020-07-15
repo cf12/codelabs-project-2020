@@ -22,22 +22,22 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="index.ejs">Roomify</a>
+      <a class="navbar-brand" href="/">Roomify</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="index.ejs">Home
+            <a class="nav-link" href="/">Home
                   <span class="sr-only">(current)</span>
                 </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="chatroom.ejs">Chatroom</a>
+            <a class="nav-link" href="/newroom">Create Room</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="register.ejs">Register Now</a>
+            <a class="nav-link" href="/">Log Out</a>
           </li>
         </ul>
       </div>
@@ -60,7 +60,7 @@
 
         <p></p>
         <h1 class="my-4"><br> Roomify <br>
-        <small>Choose the chatrooms now!</small>
+        <small>Choose a chatroom!</small>
         </h1>
 
         <!-- Page Heading ends here -->
@@ -68,83 +68,31 @@
         <!-- Rows -->
     
         <div class="row">
+          <% for(var i=0;i<rooms.length;i++){ %>
         <div class="col-lg-4 col-sm-6 mb-4">
             <div class="card h-100">
-            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+            <a href="/chatroom?rid=<%= rooms[i].id %>"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
             <div class="card-body">
                 <h4 class="card-title">
-                <a href="#">Chatroom 1</a>
+                <a href="/chatroom?rid=<%= rooms[i].id %>"><%= rooms[i].name %></a>
                 </h4>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur eum quasi sapiente nesciunt? Voluptatibus sit, repellat sequi itaque deserunt, dolores in, nesciunt, illum tempora ex quae? Nihil, dolorem!</p>
+                <p class="card-text"><%= rooms[i].description %></p>
             </div>
             </div>
         </div>
-        <div class="col-lg-4 col-sm-6 mb-4">
-            <div class="card h-100">
-            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-            <div class="card-body">
-                <h4 class="card-title">
-                <a href="#">Chatroom 2</a>
-                </h4>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-sm-6 mb-4">
-            <div class="card h-100">
-            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-            <div class="card-body">
-                <h4 class="card-title">
-                <a href="#">Chatroom 3</a>
-                </h4>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos quisquam, error quod sed cumque, odio distinctio velit nostrum temporibus necessitatibus et facere atque iure perspiciatis mollitia recusandae vero vel quam!</p>
-            </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-sm-6 mb-4">
-            <div class="card h-100">
-            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-            <div class="card-body">
-                <h4 class="card-title">
-                <a href="#">Chatroom 4</a>
-                </h4>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-sm-6 mb-4">
-            <div class="card h-100">
-            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-            <div class="card-body">
-                <h4 class="card-title">
-                <a href="#">Chatroom 5</a>
-                </h4>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-sm-6 mb-4">
-            <div class="card h-100">
-            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-            <div class="card-body">
-                <h4 class="card-title">
-                <a href="#">Chatroom 6</a>
-                </h4>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque earum nostrum suscipit ducimus nihil provident, perferendis rem illo, voluptate atque, sit eius in voluptates, nemo repellat fugiat excepturi! Nemo, esse.</p>
-            </div>
-            </div>
-        </div>
+        <% } %>
+        
         </div>
         <!-- /.row -->
 
 
-        <!-- Page Heading -->
+        <!-- Page Heading
 
         <p></p>
         <h1 class="my-4"><br> <br>
         <small>Create new rooms</small>
         </h1>
-
+      -->
         <!-- Page Heading ends here -->
 
     </div>    
@@ -153,6 +101,6 @@
 <!-- Footer -->
 <footer id="sticky-footer" class="py-4 bg-dark text-white-50">
     <div class="container text-center">
-      <small>Copyright &copy; Roomify 2020 </small>
+      <!-- <small>Copyright &copy; Roomify 2020 </small> -->
     </div>
 </footer>

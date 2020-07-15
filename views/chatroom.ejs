@@ -1,77 +1,90 @@
 <!DOCTYPE html>
 
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
 
     <!-- Link here -->
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="public/css/chatroomstyle.css">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="public/css/chatroomstyle.css" />
     <link rel="stylesheet" href="public/css/chatroom.scss" />
     <link rel="stylesheet" href="public/css/chatroom.css" />
-
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="public/js/chatroom.js"></script>
 
     <!-- Link here ends -->
+  </head>
 
-</head>
+  <!-- Nav Bar -->
 
-
-
-<!-- Nav Bar -->
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="index.ejs">Roomify</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
+      <a class="navbar-brand" href="/">Roomify</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarResponsive"
+        aria-controls="navbarResponsive"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="index.ejs">Home
-                  <span class="sr-only">(current)</span>
-                </a>
+            <a class="nav-link" href="/"
+              >Home
+              <span class="sr-only">(current)</span>
+            </a>
           </li>
-          <li class="nav-item">
+          <!--<li class="nav-item">
             <a class="nav-link" href="chatroom.ejs">Chatroom</a>
-          </li>
+          </li>-->
           <li class="nav-item">
-            <a class="nav-link" href="register.ejs">Register Now</a>
+            <a class="nav-link" href="/">Log Out</a>
           </li>
         </ul>
       </div>
     </div>
-</nav>
+  </nav>
 
-<!-- Navbar ends here -->
+  <!-- Navbar ends here -->
 
-<!-- Remember to add buttons and proper descriptions! -->
+  <!-- Remember to add buttons and proper descriptions! -->
 
-
-<body>
-  <!-- Page Content -->
-  <div class="container">
-
-  <!-- Page Content ends here -->
+  <body>
+    <!-- Page Content -->
+    <div class="container">
+      <!-- Page Content ends here -->
 
       <!-- Page Heading -->
 
       <p></p>
-      <h1 class="my-4"><br> Roomify <br>
-      <small>You have joined a room</small>
+      <h1 class="my-4">
+        <br />
+        Roomify <br />
+        <!-- Show Room name and description here maybe? <small id="room-name">You have joined a room</small>-->
       </h1>
 
       <!-- Page Heading ends here -->
 
       <!-- Chatroom -->
-  
+
       <div class="row">
         <div class="col-lg-4 col-sm-6 mb-4">
           <div class="chat-output" id="chat-output">
@@ -79,14 +92,14 @@
               <div class="message">Hiiiiii</div>
             </div>-->
           </div>
-      
+
           <div class="chat-input">
             <form action="#0" id="user-input-form">
               <input
                 type="text"
                 id="user-input"
                 class="user-input"
-                placeholder="Talk to the person!"
+                placeholder="Chat!"
               />
             </form>
           </div>
@@ -94,14 +107,13 @@
       </div>
 
       <!-- Chatroom ends -->
+    </div>
+  </body>
 
-  </div>    
-</body>
-
-<!-- Footer -->
-<footer id="sticky-footer" class="py-4 bg-dark text-white-50">
-  <div class="container text-center">
-    <small>Copyright &copy; Roomify 2020 </small>
-  </div>
-</footer>
-
+  <!-- Footer -->
+  <footer id="sticky-footer" class="py-4 bg-dark text-white-50">
+    <div class="container text-center">
+      <!--<small>Copyright &copy; Roomify 2020 </small>-->
+    </div>
+  </footer>
+</html>
