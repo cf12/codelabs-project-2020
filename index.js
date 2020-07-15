@@ -24,7 +24,10 @@ app.use(require("body-parser").urlencoded({ extended: true }));
 app.use("/public", express.static(path.join(__dirname, "public")));
 
 //temporary list of users, to be replaced with database requests
-const users = [{ username: "user1", password: "pword", id: 0 }];
+const users = [
+  { username: "user1", password: "pword", id: 0 },
+  { username: "0", password: "0", id: 1 },
+];
 
 //get user by username
 const getUserByUsername = function (username, callback) {
@@ -99,12 +102,34 @@ app.use(passport.session());
 
 //default route
 app.get("/", (req, res) => {
-  res.render("index.ejs");
+  if (!req.user) {
+    res.redirect("/login");
+  } else {
+    res.render("index.ejs", { rooms: rooms });
+  }
 });
 
 //room route
 app.get("/chatroom", (req, res) => {
-  res.render("chatroom.ejs");
+  if (!req.user) {
+    res.redirect("/login");
+  } else if (!req.query.rid) {
+    res.redirect("/");
+  } else {
+    req.session.roomId = req.query.rid;
+    res.render("chatroom.ejs");
+  }
+});
+
+//route for getting own session info
+app.get("/userinfo", (req, res) => {
+  if (!req.user) {
+    res.sendStatus("500");
+  } else if (req.query.username) {
+    res.send(req.user.username);
+  } else if (req.query.roomid) {
+    res.send(req.session.roomId);
+  }
 });
 
 //login post authenticate with passport
@@ -131,7 +156,7 @@ app.get("/register", (req, res) => {
 app.post("/register", (req, res) => {
   //check for empty fields
   if (!req.body.username || !req.body.password) {
-    res.render("register.ejs", { error: "FIll all fields" });
+    res.render("register.ejs", { error: "Fill all fields" });
   }
   //check if username taken
   else if (
@@ -161,24 +186,30 @@ io.on("connection", (socket) => {
   console.log("socket connected");
 });
 
-const rooms = [];
+const rooms = [
+  { name: "main room", id: 0 },
+  { name: "room 2", id: 1 },
+  { name: "room 3", id: 2 },
+  { name: "room 4", id: 3 },
+  { name: "room 5", id: 4 },
+];
 
 //socket channel for /chatroom
-chatRoom = io.of("/room");
+chatRoom = io.of("/chatroom");
 chatRoom.on("connection", (socket) => {
   //join room on request
   socket.on("joinRoom", (roomId) => {
-    socket.join(roomId);
+    socket.join(roomId + "");
   });
 
   //emit sent messages to room
   socket.on("message", (data) => {
-    socket.to(data.roomId).emit(data.message);
+    chatRoom.to(data.roomId + "").emit("message", data);
   });
 });
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log("server running on port " + PORT);
 });
