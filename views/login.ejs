@@ -1,7 +1,41 @@
-<h1>Log In</h1>
-<form method="POST" action="/login">
-  <input name="username" placeholder="Username" />
-  <input type="password" name="password" placeholder="Password" />
-  <input type="submit" />
-</form>
-<p id="error"><% if(messages.error){ %> <%= messages.error %> <% } %></p>
+<html>
+
+  <head>
+
+  </head>
+
+
+
+  <body>
+    
+    <h1>Log In</h1>
+    <form method="POST" action="/login">
+      <input name="username" placeholder="Username" />
+      <input type="password" name="password" placeholder="Password" />
+      <input type="submit" />
+    </form>
+    <p id="error"><% if(messages.error){ %> <%= messages.error %> <% } %></p>
+
+  </body>
+
+
+  <footer>
+    <h6>Chatroom || [Project's Name]</h6>
+    <li>
+      <ul>
+        Home
+        <a href="/public/html/index.html"> </a>
+      </ul>
+      <ul>
+        Chatroom
+        <a href="/public/html/chatroom.html"> </a>
+      </ul>
+      <ul>
+        Register
+        <a href="/public/html/register.html"> </a>
+      </ul>
+    </li>
+  </footer>
+
+</html>
+
