@@ -1,0 +1,8 @@
+<h1>Create Room</h1>
+
+<form action="/newroom" method="POST">
+  <input name="name" placeholder="Room name" />
+  <input name="description" placeholder="Description" />
+  <input type="submit" />
+</form>
+<p id="error"><% if(typeof error !== "undefined"){ %><%= error %><% } %></p>

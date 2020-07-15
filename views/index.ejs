@@ -19,7 +19,7 @@
   </head>
 
   <body>
-
+<a href="/newroom">Create New Room</a>
     <h1>Join the live chats</h1>
     <p>Lorem ipsum</p>
 
@@ -32,7 +32,7 @@
               <img src="">
             </figure>
             <h4><%= rooms[i].name %></h4>
-            <h5>Description</h5>
+            <h5><%= rooms[i].description %></h5>
             <p>Lorem ipsum</p>
             <button type="button">
               <a href="/chatroom?rid=<%= rooms[i].id %>">Join Now!</a>

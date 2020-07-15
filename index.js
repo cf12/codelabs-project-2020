@@ -6,6 +6,7 @@ const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const flash = require("express-flash");
+const { brotliCompressSync } = require("zlib");
 
 const app = express();
 const server = http.createServer(app);
@@ -181,17 +182,43 @@ app.post("/register", (req, res) => {
   }
 });
 
+//new room form
+app.post("/newroom", (req, res) => {
+  if (!req.user) {
+    res.redirect("/login");
+  } else if (!req.body.name) {
+    res.render("newroom.ejs", { error: "Name field required" });
+  } else {
+    rooms.push({
+      name: req.body.name,
+      id: rooms.length,
+      description:
+        req.body.description === "" ? "No description" : req.body.description,
+    });
+    res.redirect("/");
+  }
+});
+
+//new room get route
+app.get("/newroom", (req, res) => {
+  if (!req.user) {
+    res.redirect("/login");
+  } else {
+    res.render("newroom.ejs");
+  }
+});
+
 //socket
 io.on("connection", (socket) => {
   console.log("socket connected");
 });
 
 const rooms = [
-  { name: "main room", id: 0 },
-  { name: "room 2", id: 1 },
-  { name: "room 3", id: 2 },
-  { name: "room 4", id: 3 },
-  { name: "room 5", id: 4 },
+  { name: "main room", id: 0, description: "room description" },
+  { name: "room 2", id: 1, description: "room description" },
+  { name: "room 3", id: 2, description: "room description" },
+  { name: "room 4", id: 3, description: "room description" },
+  { name: "room 5", id: 4, description: "room description" },
 ];
 
 //socket channel for /chatroom
