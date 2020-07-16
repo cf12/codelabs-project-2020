@@ -1,0 +1,22 @@
+/* Body */
+
+body {
+    background: #007bff;
+    background: linear-gradient(to right, #0470DC, #70DDFF);
+  }
+  
+  
+  /* Footer */
+  
+  html,
+  body {
+    height: 100%;
+  }
+  
+  #page-content {
+    flex: 1 0 auto;
+  }
+  
+  #sticky-footer {
+    flex-shrink: none;
+  }
