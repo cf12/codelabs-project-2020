@@ -11,6 +11,7 @@ const { brotliCompressSync } = require("zlib");
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
+app.io = io;
 
 //use ejs
 app.set("view-engine", "ejs");
@@ -189,12 +190,14 @@ app.post("/newroom", (req, res) => {
   } else if (!req.body.name) {
     res.render("newroom.ejs", { error: "Name field required" });
   } else {
-    rooms.push({
+    let room = {
       name: req.body.name,
       id: rooms.length,
       description:
         req.body.description === "" ? "No description" : req.body.description,
-    });
+    };
+    rooms.push(room);
+    req.app.io.emit("newRoom", room);
     res.redirect("/");
   }
 });
