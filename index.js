@@ -183,6 +183,14 @@ app.post("/register", (req, res) => {
   }
 });
 
+//log out
+app.get("/logout", (req, res) => {
+  if (req.user) {
+    req.logout();
+  }
+  res.redirect("/login");
+});
+
 //new room form
 app.post("/newroom", (req, res) => {
   if (!req.user) {
