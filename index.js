@@ -7,11 +7,21 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const flash = require("express-flash");
 const { brotliCompressSync } = require("zlib");
+const mongoose = require("mongoose");
 
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 app.io = io;
+
+//connect mongoose
+mongoose.connect(
+  "mongodb+srv://jdlane:codedaychat112@cluster0.yxxvc.mongodb.net/roomify?retryWrites=true&w=majority",
+  { useNewUrlParser: true, useUnifiedTopology: true }
+);
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+const User = require("./database.js");
 
 //use ejs
 app.set("view-engine", "ejs");
@@ -26,33 +36,37 @@ app.use(require("body-parser").urlencoded({ extended: true }));
 app.use("/public", express.static(path.join(__dirname, "public")));
 
 //temporary list of users, to be replaced with database requests
-const users = [
+/*const users = [
   { username: "user1", password: "pword", id: 0 },
   { username: "0", password: "0", id: 1 },
-];
+];*/
 
 //get user by username
 const getUserByUsername = function (username, callback) {
-  let user = users.find((user) => {
-    return user.username === username;
+  User.findOne({ username: username }, (err, user) => {
+    callback(user, null);
   });
-  callback(user, null);
 };
 const getUserById = function (id, callback) {
-  let user = users.find((user) => {
-    return user.id === id;
+  User.findById(id, (err, user) => {
+    callback(user, null);
   });
-  callback(user, null);
 };
 const comparePassword = function (pw1, pw2) {
   //replace with bcrypt compare later
   return pw1 === pw2;
 };
 const addUser = function (username, password) {
-  //replace with database insert later
-  let user = { username: username, password: password, id: users.length };
-  users.push(user);
-  return user;
+  newUser = new User({
+    username: username,
+    password: password,
+  });
+
+  newUser.save((err, newUser) => {
+    if (err) return console.error(err);
+  });
+
+  return newUser;
 };
 
 //local strategy for authentication
@@ -75,7 +89,7 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user._id);
 });
 
 passport.deserializeUser((id, done) => {
@@ -159,26 +173,31 @@ app.post("/register", (req, res) => {
   //check for empty fields
   if (!req.body.username || !req.body.password) {
     res.render("register.ejs", { error: "Fill all fields" });
-  }
-  //check if username taken
-  else if (
-    users.find((user) => {
-      return user.username === req.body.username;
-    })
-  ) {
-    res.render("register.ejs", { error: "Username is taken" });
-  }
-  //success
-  else {
-    //create account
-    let addedUser = addUser(req.body.username, req.body.password);
-
-    //log in
-    req.login(addedUser, function (err) {
+  } else {
+    //try to find user by that username
+    getUserByUsername(req.body.username, (user, err) => {
       if (err) {
-        return next(err);
+        console.error(err);
+        //server error
+        res.render("register.ejs", { error: "server error" });
+      } else {
+        //user exists
+        if (user) {
+          res.render("register.ejs", { error: "username taken" });
+        } else {
+          //create account
+          let addedUser = addUser(req.body.username, req.body.password);
+
+          //log in
+          req.login(addedUser, function (err) {
+            if (err) {
+              console.error(err);
+              return res.render("register.ejs", { error: "server error" });
+            }
+            return res.redirect("/");
+          });
+        }
       }
-      return res.redirect("/");
     });
   }
 });
