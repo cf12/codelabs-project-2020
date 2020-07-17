@@ -1,3 +1,4 @@
+require("dotenv").config();
 const http = require("http");
 const path = require("path");
 const socketio = require("socket.io");
@@ -15,10 +16,14 @@ const io = socketio(server);
 app.io = io;
 
 //connect mongoose
-mongoose.connect(
-  "mongodb+srv://jdlane:codedaychat112@cluster0.yxxvc.mongodb.net/roomify?retryWrites=true&w=majority",
-  { useNewUrlParser: true, useUnifiedTopology: true }
-);
+mongoose
+  .connect(process.env.DB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("connected to database");
+  });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 const User = require("./database.js");
