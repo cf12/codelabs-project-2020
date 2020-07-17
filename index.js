@@ -106,7 +106,7 @@ passport.deserializeUser((id, done) => {
 
 //init session
 const sessionMiddleware = session({
-  secret: "super secret",
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
 });
