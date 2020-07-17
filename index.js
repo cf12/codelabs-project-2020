@@ -9,6 +9,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const flash = require("express-flash");
 const { brotliCompressSync } = require("zlib");
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const app = express();
 const server = http.createServer(app);
@@ -40,12 +41,6 @@ app.use(require("body-parser").urlencoded({ extended: true }));
 //set static folder to /public
 app.use("/public", express.static(path.join(__dirname, "public")));
 
-//temporary list of users, to be replaced with database requests
-/*const users = [
-  { username: "user1", password: "pword", id: 0 },
-  { username: "0", password: "0", id: 1 },
-];*/
-
 //get user by username
 const getUserByUsername = function (username, callback) {
   User.findOne({ username: username }, (err, user) => {
@@ -57,21 +52,20 @@ const getUserById = function (id, callback) {
     callback(user, null);
   });
 };
-const comparePassword = function (pw1, pw2) {
-  //replace with bcrypt compare later
-  return pw1 === pw2;
+const comparePassword = function (password, hash) {
+  return bcrypt.compareSync(password, hash);
 };
-const addUser = function (username, password) {
-  newUser = new User({
-    username: username,
-    password: password,
-  });
+const addUser = function (username, password, callback) {
+  bcrypt.hash(password, 10, (err1, hash) => {
+    let newUser = new User({
+      username: username,
+      password: hash,
+    });
 
-  newUser.save((err, newUser) => {
-    if (err) return console.error(err);
+    newUser.save((err2, newUser) => {
+      callback(err1 || err2, newUser);
+    });
   });
-
-  return newUser;
 };
 
 //local strategy for authentication
@@ -84,7 +78,7 @@ passport.use(
       if (!user) {
         return done(null, false, { message: "Incorrect username or password" });
       }
-      if (comparePassword(user.password, password)) {
+      if (comparePassword(password, user.password)) {
         return done(null, user);
       } else {
         return done(null, false, { message: "Incorrect username or password" });
@@ -191,15 +185,17 @@ app.post("/register", (req, res) => {
           res.render("register.ejs", { error: "username taken" });
         } else {
           //create account
-          let addedUser = addUser(req.body.username, req.body.password);
-
-          //log in
-          req.login(addedUser, function (err) {
-            if (err) {
-              console.error(err);
-              return res.render("register.ejs", { error: "server error" });
-            }
-            return res.redirect("/");
+          addUser(req.body.username, req.body.password, (err, addedUser) => {
+            //log in
+            req.login(addedUser, function (err) {
+              if (err) {
+                console.error(err);
+                return res.render("register.ejs", {
+                  error: "Server error",
+                });
+              }
+              return res.redirect("/");
+            });
           });
         }
       }
