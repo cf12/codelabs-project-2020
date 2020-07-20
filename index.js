@@ -132,7 +132,12 @@ app.get("/chatroom", (req, res) => {
     res.redirect("/");
   } else {
     req.session.roomId = req.query.rid;
-    res.render("chatroom.ejs");
+    room = rooms.find((room) => {
+      return room.id === req.query.rid;
+    });
+    if (!room) {
+      res.redirect("/");
+    } else res.render("chatroom.ejs");
   }
 });
 
@@ -241,15 +246,20 @@ app.get("/newroom", (req, res) => {
 
 //socket
 io.on("connection", (socket) => {
-  console.log("socket connected");
+  //console.log("socket connected");
 });
 
 const rooms = [
-  { name: "main room", id: 0, description: "room description" },
-  { name: "room 2", id: 1, description: "room description" },
-  { name: "room 3", id: 2, description: "room description" },
-  { name: "room 4", id: 3, description: "room description" },
-  { name: "room 5", id: 4, description: "room description" },
+  {
+    name: "main room",
+    id: "0",
+    description: "room description",
+    activeUsers: [],
+  },
+  { name: "room 2", id: "1", description: "room description", activeUsers: [] },
+  { name: "room 3", id: "2", description: "room description", activeUsers: [] },
+  { name: "room 4", id: "3", description: "room description", activeUsers: [] },
+  { name: "room 5", id: "4", description: "room description", activeUsers: [] },
 ];
 
 //socket channel for /chatroom
@@ -257,7 +267,52 @@ chatRoom = io.of("/chatroom");
 chatRoom.on("connection", (socket) => {
   //join room on request
   socket.on("joinRoom", (roomId) => {
-    socket.join(roomId + "");
+    if (roomId && socket.request.session.passport) {
+      socket.join(roomId + "");
+      let room = rooms.find((room) => {
+        return room.id === roomId + "";
+      });
+      socket.room = roomId;
+      socket.userId = socket.request.session.passport.user;
+
+      //find if user is in room already
+      getUserById(socket.userId, (user, err) => {
+        let thisUser = room.activeUsers.find((u) => {
+          return u.username === user.username;
+        });
+        if (thisUser) {
+          thisUser.connections++;
+        } else {
+          room.activeUsers.push({
+            username: user.username,
+            connections: 1,
+          });
+          chatRoom.to(roomId + "").emit("userJoined", user.username);
+        }
+      });
+    }
+  });
+
+  socket.on("disconnect", () => {
+    if (socket.room) {
+      let room = rooms.find((room) => {
+        return room.id === socket.room;
+      });
+      getUserById(socket.userId, (user, err) => {
+        let thisUser = room.activeUsers.find((u) => {
+          return u.username === user.username;
+        });
+        if (!thisUser) {
+          console.log("error: user left room they aren't in");
+        } else {
+          thisUser.connections--;
+          if (thisUser.connections <= 0) {
+            room.activeUsers.splice(room.activeUsers.indexOf(thisUser), 1);
+            chatRoom.to(socket.room + "").emit("userLeft", user.username);
+          }
+        }
+      });
+    }
   });
 
   //emit sent messages to room

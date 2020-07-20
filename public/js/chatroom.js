@@ -5,10 +5,19 @@ var roomId;
 //on socket connection, ask server to join current room
 socket.on("connect", () => {
   $.get("/userinfo", { roomid: true }, (rid) => {
-    console.log(rid);
     roomId = rid;
     socket.emit("joinRoom", roomId);
   });
+});
+
+//user joined room
+socket.on("userJoined", (username) => {
+  //TODO alter list of users or user count
+});
+
+//user left room
+socket.on("userLeft", (username) => {
+  //TODO alter list of users or user count
 });
 
 $("document").ready(() => {
