@@ -46,6 +46,9 @@ $("document").ready(() => {
       if (data.name === username) {
         outputArea.append(`
     <div class='user-message'>
+    <div class='timesent'>
+    ${new Date(data.time).toLocaleString()}
+    </div>
       <div class='message'>
         ${data.message}
       </div>
@@ -54,6 +57,12 @@ $("document").ready(() => {
       } else {
         outputArea.append(`
     <div class='bot-message'>
+        <div class='username'>
+        ${data.name}
+    </div>
+    <div class='timesent'>
+    ${new Date(data.time).toLocaleString()}
+    </div>
       <div class='message'>
         ${data.message}
       </div>

@@ -329,6 +329,7 @@ chatRoom.on("connection", (socket) => {
 
   //emit sent messages to room
   socket.on("message", (data) => {
+    data.time = Date.now();
     chatRoom.to(data.roomId + "").emit("message", data);
   });
 });
