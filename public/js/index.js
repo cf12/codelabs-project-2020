@@ -1,16 +1,47 @@
 var socket = io();
 
-socket.on("newRoom", (room) => {
-  console.log("new room");
-  $("#rooms-div").append(`<div class="col-lg-4 col-sm-6 mb-4">
+$("document").ready(() => {
+  //add room live on room created event
+  socket.on("newRoom", (room) => {
+    //append room card to room div
+    $("#rooms-div")
+      .append(`<div class="col-lg-4 col-sm-6 mb-4" id="room-card-${room.id}">
             <div class="card h-100">
-            <a href="/chatroom?rid=${room.id}>"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+            <a href="/chatroom?rid=${room.id}"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
             <div class="card-body">
                 <h4 class="card-title">
-                <a href="/chatroom?rid=${room.id}>">${room.name}</a>
+                <a href="/chatroom?rid=${room.id}">${room.name}</a>
                 </h4>
                 <p class="card-text">${room.description}</p>
+                <p class="card-text">Active users: <span class="user-count"><%= rooms[i].activeUsers.length %></span></p>
             </div>
             </div>
     </div>`);
+  });
+
+  //increase active user count when a user joins a room
+  socket.on("roomJoin", (room) => {
+    //get room element
+    let roomCard = $(`#room-card-${room.id}`);
+
+    //check if card exists
+    if (roomCard) {
+      //get user count element
+      let userCount = roomCard.find(".user-count");
+      userCount.html(room.userCount);
+    }
+  });
+
+  //decrease active user count when a user leaves a room
+  socket.on("roomLeave", (room) => {
+    //get room element
+    let roomCard = $(`#room-card-${room.id}`);
+
+    //check if card exists
+    if (roomCard) {
+      //get user count element
+      let userCount = roomCard.find(".user-count");
+      userCount.html(room.userCount);
+    }
+  });
 });

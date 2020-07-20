@@ -71,7 +71,7 @@
     
         <div class="row" id="rooms-div">
           <% for(var i=0;i<rooms.length;i++){ %>
-        <div class="col-lg-4 col-sm-6 mb-4">
+        <div class="col-lg-4 col-sm-6 mb-4" id="room-card-<%= rooms[i].id %>">
             <div class="card h-100">
             <a href="/chatroom?rid=<%= rooms[i].id %>"><img class="card-img-top" src="/public/assets/indexPictures/0.jpg" alt=""></a>
             <div class="card-body">
@@ -79,7 +79,7 @@
                 <a href="/chatroom?rid=<%= rooms[i].id %>"><%= rooms[i].name %></a>
                 </h4>
                 <p class="card-text"><%= rooms[i].description %></p>
-                <p class="card-text">Active users: <%= rooms[i].activeUsers.length %></p>
+                <p class="card-text">Active users: <span class="user-count"><%= rooms[i].activeUsers.length %></span></p>
             </div>
             </div>
         </div>

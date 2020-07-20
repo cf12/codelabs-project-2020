@@ -288,6 +288,12 @@ chatRoom.on("connection", (socket) => {
             connections: 1,
           });
           chatRoom.to(roomId + "").emit("userJoined", user.username);
+          setTimeout(() => {
+            io.emit("roomJoin", {
+              id: roomId,
+              userCount: room.activeUsers.length,
+            });
+          }, 500);
         }
       });
     }
@@ -309,6 +315,12 @@ chatRoom.on("connection", (socket) => {
           if (thisUser.connections <= 0) {
             room.activeUsers.splice(room.activeUsers.indexOf(thisUser), 1);
             chatRoom.to(socket.room + "").emit("userLeft", user.username);
+            setTimeout(() => {
+              io.emit("roomLeave", {
+                id: socket.room,
+                userCount: room.activeUsers.length,
+              });
+            }, 500);
           }
         }
       });
