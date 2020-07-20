@@ -66,57 +66,58 @@
       <div class="wave water"></div>
       <div class="wave water"></div>
 
+    
+      <!-- Page Content -->
+      <div class="container">
+
+      <!-- Page Content ends here -->
+
+          <!-- Page Heading -->
+
+          <p></p>
+          <h1 class="my-4"><br> Roomify <br>
+          <small>Choose a chatroom!</small>
+          </h1>
+
+          <!-- Page Heading ends here -->
+
+          <!-- Rows -->
+      
+          <div class="row" id="rooms-div">
+            <% for(var i=0;i<rooms.length;i++){ %>
+          <div class="col-lg-4 col-sm-6 mb-4" id="room-card-<%= rooms[i].id %>">
+              <div class="card h-100">
+              <a href="/chatroom?rid=<%= rooms[i].id %>"><img class="card-img-top" src="/public/assets/indexPictures/0.jpg" alt=""></a>
+              <div class="card-body">
+                  <h4 class="card-title">
+                  <a href="/chatroom?rid=<%= rooms[i].id %>"><%= rooms[i].name %></a>
+                  </h4>
+                  <p class="card-text"><%= rooms[i].description %></p>
+                  <p class="card-text">Active users: <span class="user-count"><%= rooms[i].activeUsers.length %></span></p>
+              </div>
+              </div>
+          </div>
+          <% } %>
+          
+          </div>
+          <!-- /.row -->
+
+
+          <!-- Page Heading
+
+          <p></p>
+          <h1 class="my-4"><br> <br>
+          <small>Create new rooms</small>
+          </h1>
+        -->
+          <!-- Page Heading ends here -->
+              <h3><a href="/newroom">Create a new chatroom</a></h3>
+      </div>
     </section>
 
     <!--
       Waves End
-    -->
-    <!-- Page Content -->
-    <div class="container">
-
-    <!-- Page Content ends here -->
-
-        <!-- Page Heading -->
-
-        <p></p>
-        <h1 class="my-4"><br> Roomify <br>
-        <small>Choose a chatroom!</small>
-        </h1>
-
-        <!-- Page Heading ends here -->
-
-        <!-- Rows -->
-    
-        <div class="row" id="rooms-div">
-          <% for(var i=0;i<rooms.length;i++){ %>
-        <div class="col-lg-4 col-sm-6 mb-4" id="room-card-<%= rooms[i].id %>">
-            <div class="card h-100">
-            <a href="/chatroom?rid=<%= rooms[i].id %>"><img class="card-img-top" src="/public/assets/indexPictures/0.jpg" alt=""></a>
-            <div class="card-body">
-                <h4 class="card-title">
-                <a href="/chatroom?rid=<%= rooms[i].id %>"><%= rooms[i].name %></a>
-                </h4>
-                <p class="card-text"><%= rooms[i].description %></p>
-                <p class="card-text">Active users: <span class="user-count"><%= rooms[i].activeUsers.length %></span></p>
-            </div>
-            </div>
-        </div>
-        <% } %>
-        
-        </div>
-        <!-- /.row -->
-
-
-        <!-- Page Heading
-
-        <p></p>
-        <h1 class="my-4"><br> <br>
-        <small>Create new rooms</small>
-        </h1>
-      -->
-        <!-- Page Heading ends here -->
-            <h3><a href="/newroom">Create a new chatroom</a></h3>
-    </div>  
+    -->  
 </body>
 
 <!-- Footer -->
