@@ -9,6 +9,20 @@ body {
 
 */
 
+body 
+{
+  text-align: center;
+}
+
+.row, .form-group, .col-lg-4.col-sm-6.mb-4, .form 
+{
+  text-align: center;
+}
+
+.label {
+  text-align: center;
+}
+
 *{
   margin: 0;
   padding: 0;
