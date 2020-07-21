@@ -4,10 +4,14 @@ var roomId;
 
 //on socket connection, ask server to join current room
 socket.on("connect", () => {
-  $.get("/userinfo", { roomid: true }, (rid) => {
-    roomId = rid;
-    socket.emit("joinRoom", roomId);
+  let params = window.location.href.split("?")[1].split("&");
+  let paramObj = {};
+  params.forEach((param) => {
+    let pair = param.split("=");
+    paramObj[pair[0]] = pair[1];
   });
+  roomId = paramObj["rid"];
+  socket.emit("joinRoom", roomId);
 });
 
 //user joined room

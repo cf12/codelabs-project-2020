@@ -131,7 +131,6 @@ app.get("/chatroom", (req, res) => {
   } else if (!req.query.rid) {
     res.redirect("/");
   } else {
-    req.session.roomId = req.query.rid;
     room = rooms.find((room) => {
       return room.id === req.query.rid;
     });
@@ -147,8 +146,6 @@ app.get("/userinfo", (req, res) => {
     res.sendStatus("500");
   } else if (req.query.username) {
     res.send(req.user.username);
-  } else if (req.query.roomid) {
-    res.send(req.session.roomId);
   }
 });
 
