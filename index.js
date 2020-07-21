@@ -228,6 +228,7 @@ app.post("/newroom", (req, res) => {
       id: rooms.length,
       description:
         req.body.description === "" ? "No description" : req.body.description,
+      activeUsers: [],
     };
     rooms.push(room);
     req.app.io.emit("newRoom", room);
