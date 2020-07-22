@@ -27,7 +27,8 @@ mongoose
   });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
-const User = require("./database.js");
+const User = require("./database.js").user;
+const Room = require("./database.js").room;
 
 //use ejs
 app.set("view-engine", "ejs");
@@ -65,6 +66,24 @@ const addUser = function (username, password, callback) {
     newUser.save((err2, newUser) => {
       callback(err1 || err2, newUser);
     });
+  });
+};
+
+const addRoom = function (name, description, creator, callback) {
+  let newRoom = new Room({
+    name: name,
+    description: description,
+    creator: creator,
+  });
+
+  newRoom.save((err, newRoom) => {
+    callback(err, newRoom);
+  });
+};
+
+const getRoomById = function (id, callback) {
+  Room.findById(id, (room, err) => {
+    callback((room, err));
   });
 };
 
@@ -120,7 +139,36 @@ app.get("/", (req, res) => {
   if (!req.user) {
     res.redirect("/login");
   } else {
-    res.render("index.ejs", { rooms: rooms });
+    Room.find({}, (err, roomList) => {
+      if (!err) {
+        rooms = [];
+        roomList.forEach((room) => {
+          roomUsers = roomsActiveUsers.find((r) => {
+            return r.id === room._id.toString();
+          });
+          if (roomUsers) {
+            rooms.push({
+              name: room.name,
+              description: room.description,
+              creator: room.creator,
+              _id: room._id,
+              activeUsers: roomUsers.users,
+            });
+          } else {
+            rooms.push({
+              name: room.name,
+              description: room.description,
+              creator: room.creator,
+              _id: room._id,
+              activeUsers: [],
+            });
+          }
+        });
+        res.render("index.ejs", { rooms: rooms });
+      } else {
+        res.render("index.ejs", { rooms: [] });
+      }
+    });
   }
 });
 
@@ -131,12 +179,13 @@ app.get("/chatroom", (req, res) => {
   } else if (!req.query.rid) {
     res.redirect("/");
   } else {
-    room = rooms.find((room) => {
-      return room.id === req.query.rid;
+    getRoomById(req.query.id, (err, room) => {
+      if (err) {
+        res.redirect("/");
+      } else {
+        res.render("chatroom.ejs");
+      }
     });
-    if (!room) {
-      res.redirect("/");
-    } else res.render("chatroom.ejs");
   }
 });
 
@@ -220,16 +269,18 @@ app.post("/newroom", (req, res) => {
   } else if (!req.body.name) {
     res.render("newroom.ejs", { error: "Name field required" });
   } else {
-    let room = {
-      name: req.body.name,
-      id: rooms.length,
-      description:
-        req.body.description === "" ? "No description" : req.body.description,
-      activeUsers: [],
-    };
-    rooms.push(room);
-    req.app.io.emit("newRoom", room);
-    res.redirect("/");
+    addRoom(
+      req.body.name,
+      req.body.description || "No description",
+      req.user._id,
+      (err, room) => {
+        if (!err) {
+          req.app.io.emit("newRoom", room);
+          rooms.push(room);
+        }
+        res.redirect("/");
+      }
+    );
   }
 });
 
@@ -247,18 +298,7 @@ io.on("connection", (socket) => {
   //console.log("socket connected");
 });
 
-const rooms = [
-  {
-    name: "main room",
-    id: "0",
-    description: "room description",
-    activeUsers: [],
-  },
-  { name: "room 2", id: "1", description: "room description", activeUsers: [] },
-  { name: "room 3", id: "2", description: "room description", activeUsers: [] },
-  { name: "room 4", id: "3", description: "room description", activeUsers: [] },
-  { name: "room 5", id: "4", description: "room description", activeUsers: [] },
-];
+const roomsActiveUsers = [];
 
 //socket channel for /chatroom
 chatRoom = io.of("/chatroom");
@@ -266,32 +306,51 @@ chatRoom.on("connection", (socket) => {
   //join room on request
   socket.on("joinRoom", (roomId) => {
     if (roomId && socket.request.session.passport) {
-      socket.join(roomId + "");
-      let room = rooms.find((room) => {
-        return room.id === roomId + "";
-      });
-      socket.room = roomId;
-      socket.userId = socket.request.session.passport.user;
+      getRoomById(roomId, (room, roomErr) => {
+        if (!roomErr) {
+          socket.join(roomId);
 
-      //find if user is in room already
-      getUserById(socket.userId, (user, err) => {
-        let thisUser = room.activeUsers.find((u) => {
-          return u.username === user.username;
-        });
-        if (thisUser) {
-          thisUser.connections++;
-        } else {
-          room.activeUsers.push({
-            username: user.username,
-            connections: 1,
+          socket.room = roomId;
+          socket.userId = socket.request.session.passport.user;
+
+          roomUsers = roomsActiveUsers.find((room) => {
+            return room.id === roomId;
           });
-          chatRoom.to(roomId + "").emit("userJoined", user.username);
-          setTimeout(() => {
-            io.emit("roomJoin", {
-              id: roomId,
-              userCount: room.activeUsers.length,
-            });
-          }, 500);
+
+          getUserById(socket.userId, (user, userErr) => {
+            if (!userErr) {
+              //if first user in room
+              if (!roomUsers) {
+                roomUsers = {
+                  id: roomId,
+                  users: [{ name: user.username, connections: 1 }],
+                };
+                roomsActiveUsers.push(roomUsers);
+              } else {
+                //find user in room's active users
+                thisUser = roomUsers.users.find((u) => {
+                  return u.name === user.username;
+                });
+
+                //if fist connection by this user
+                if (!thisUser) {
+                  roomUsers.users.push({ name: user.username, connections: 1 });
+                }
+                //else
+                else {
+                  thisUser.connections++;
+                }
+              }
+              //emit join
+              chatRoom.to(roomId).emit("userJoined", user.username);
+              setTimeout(() => {
+                io.emit("roomJoin", {
+                  id: roomId,
+                  userCount: roomUsers.users.length,
+                });
+              }, 500);
+            }
+          });
         }
       });
     }
@@ -299,27 +358,43 @@ chatRoom.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     if (socket.room) {
-      let room = rooms.find((room) => {
-        return room.id === socket.room;
-      });
-      getUserById(socket.userId, (user, err) => {
-        let thisUser = room.activeUsers.find((u) => {
-          return u.username === user.username;
-        });
-        if (!thisUser) {
-          console.log("error: user left room they aren't in");
-        } else {
-          thisUser.connections--;
-          if (thisUser.connections <= 0) {
-            room.activeUsers.splice(room.activeUsers.indexOf(thisUser), 1);
-            chatRoom.to(socket.room + "").emit("userLeft", user.username);
-            setTimeout(() => {
-              io.emit("roomLeave", {
-                id: socket.room,
-                userCount: room.activeUsers.length,
-              });
-            }, 500);
-          }
+      getRoomById(socket.room, (room, roomErr) => {
+        if (!roomErr) {
+          roomUsers = roomsActiveUsers.find((r) => {
+            return r.id === socket.room;
+          });
+
+          getUserById(socket.userId, (user, userErr) => {
+            let thisUser = roomUsers.users.find((u) => {
+              return u.name === user.username;
+            });
+
+            if (!thisUser) {
+              console.error("User left room they aren't in");
+            } else {
+              thisUser.connections--;
+              //if user has no connections left to room
+              if (thisUser.connections <= 0) {
+                //remove user from users list
+                roomUsers.users.splice(roomUsers.users.indexOf(thisUser), 1);
+                //if room has no users, remove it from rooms' active users list
+                if (roomUsers.users.length === 0) {
+                  roomsActiveUsers.splice(
+                    roomsActiveUsers.indexOf(roomUsers),
+                    1
+                  );
+                }
+                //emit left room
+                chatRoom.to(socket.room).emit("userLeft", user.username);
+                setTimeout(() => {
+                  io.emit("roomLeave", {
+                    id: socket.room,
+                    userCount: roomUsers.users.length,
+                  });
+                }, 500);
+              }
+            }
+          });
         }
       });
     }
@@ -328,7 +403,7 @@ chatRoom.on("connection", (socket) => {
   //emit sent messages to room
   socket.on("message", (data) => {
     data.time = Date.now();
-    chatRoom.to(data.roomId + "").emit("message", data);
+    chatRoom.to(data.roomId).emit("message", data);
   });
 });
 
