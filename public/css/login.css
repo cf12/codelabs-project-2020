@@ -9,9 +9,10 @@ body {
 
 */
 
-body 
+body, html
 {
   text-align: center;
+  justify-content: center;
 }
 
 .row, .form-group, .col-lg-4.col-sm-6.mb-4, .form 
