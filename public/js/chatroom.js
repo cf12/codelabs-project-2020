@@ -25,6 +25,11 @@ socket.on("userLeft", (username) => {
 });
 
 $("document").ready(() => {
+  //scroll to bottom
+  document.getElementById("chat-section").scrollTop = document.getElementById(
+    "chat-section"
+  ).scrollHeight;
+
   $(".timesent").each((index, value) => {
     console.log($(value).html());
     $(value).html(new Date(parseInt($(value).html())).toLocaleString());
