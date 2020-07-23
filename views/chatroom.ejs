@@ -104,9 +104,23 @@
         <div class="row">
           <div class="col-lg-4 col-sm-6 mb-4">
             <div class="chat-output" id="chat-output">
-              <!--<div class="user-message">
-                <div class="message">Hiiiiii</div>
-              </div>-->
+              <% for(var i=0;i<messages.length;i++){ %>
+                <% if(!messages[i].fromThisUser){ %>
+                <div class='bot-message'>
+                  <div class='username'>
+                    <%= messages[i].sender %>
+                  </div>
+                  <% }else{ %>
+                    <div class='user-message'>
+                  <% } %>
+                  <div class='timesent'>
+                    <%= messages[i].time %>
+                  </div>
+                  <div class='message'>
+                    <%= messages[i].body %>
+                  </div>
+                </div>
+              <% } %>
             </div>
 
             <div class="chat-input">

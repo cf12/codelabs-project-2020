@@ -27,8 +27,10 @@ mongoose
   });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
-const User = require("./database.js").user;
-const Room = require("./database.js").room;
+const models = require("./database.js");
+const User = models.user;
+const Room = models.room;
+const Message = models.message;
 
 //use ejs
 app.set("view-engine", "ejs");
@@ -84,6 +86,25 @@ const addRoom = function (name, description, creator, callback) {
 const getRoomById = function (id, callback) {
   Room.findById(id, (room, err) => {
     callback((room, err));
+  });
+};
+
+const addMessage = function (message, callback) {
+  getRoomById(message.roomId, (room, err) => {
+    if (err) {
+      callback(null, err);
+    } else {
+      room.messages.push(
+        new Message({
+          body: message.message,
+          sender: message.name,
+          time: message.time,
+        })
+      );
+      room.save((err, room) => {
+        callback(err, room);
+      });
+    }
   });
 };
 
@@ -179,11 +200,20 @@ app.get("/chatroom", (req, res) => {
   } else if (!req.query.rid) {
     res.redirect("/");
   } else {
-    getRoomById(req.query.id, (err, room) => {
+    getRoomById(req.query.rid, (room, err) => {
       if (err) {
         res.redirect("/");
       } else {
-        res.render("chatroom.ejs");
+        let messages = [];
+        room.messages.forEach((message) => {
+          messages.push({
+            body: message.body,
+            time: message.time,
+            sender: message.sender,
+            fromThisUser: message.sender === req.user.username,
+          });
+        });
+        res.render("chatroom.ejs", { messages: messages });
       }
     });
   }
@@ -403,7 +433,14 @@ chatRoom.on("connection", (socket) => {
   //emit sent messages to room
   socket.on("message", (data) => {
     data.time = Date.now();
-    chatRoom.to(data.roomId).emit("message", data);
+
+    addMessage(data, (err, message) => {
+      if (err) {
+        throw err;
+      } else {
+        chatRoom.to(data.roomId).emit("message", data);
+      }
+    });
   });
 });
 

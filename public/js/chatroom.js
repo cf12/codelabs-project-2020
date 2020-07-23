@@ -25,6 +25,11 @@ socket.on("userLeft", (username) => {
 });
 
 $("document").ready(() => {
+  $(".timesent").each((index, value) => {
+    console.log($(value).html());
+    $(value).html(new Date(parseInt($(value).html())).toLocaleString());
+  });
+
   var outputArea = $("#chat-output");
 
   $("#user-input-form").on("submit", function (e) {
