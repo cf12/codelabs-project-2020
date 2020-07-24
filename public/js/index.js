@@ -7,7 +7,7 @@ $("document").ready(() => {
     $("#rooms-div")
       .append(`<div class="col-lg-4 col-sm-6 mb-4" id="room-card-${room._id}">
             <div class="card h-100">
-            <a href="/chatroom?rid=${room._id}"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+            <a href="/chatroom?rid=${room._id}"><img class="card-img-top" src="/public/assets/indexPictures/0.png" alt=""></a>
             <div class="card-body">
                 <h4 class="card-title">
                 <a href="/chatroom?rid=${room._id}">${room.name}</a>
