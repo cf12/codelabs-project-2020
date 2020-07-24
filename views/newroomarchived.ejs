@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html lang="en"> 
-
-
+<html lang="en">
 
 <head>
-    <title>Home || Roomify</title>
+
+    <title>Newroom || Roomify</title>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,23 +12,17 @@
 
     <!-- Link here -->
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/public/css/indexstyle.css">
+    <link rel="stylesheet" href="/public/css/newroom.css">
+    <script src="/public/js/newroom.js"></script>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/public/js/index.js"></script>
     <!-- Link here ends -->
-
-
-
 
 </head>
 
-
-
 <!-- Nav Bar -->
+
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
@@ -40,13 +33,13 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="index.ejs">Home
+            <a class="nav-link" href="/">Home
                   <span class="sr-only">(current)</span>
                 </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="newroom.ejs">Create Room</a>
-          </li>
+          <!--<li class="nav-item">
+            <a class="nav-link" href="/">Chatroom</a>
+          </li>-->
           <li class="nav-item">
             <a class="nav-link" href="/logout">Log Out</a>
           </li>
@@ -57,74 +50,53 @@
 
 <!-- Navbar ends here -->
 
-
 <!-- Remember to add buttons and proper descriptions! -->
 
 
 <body>
 
-    <!--
-      Waves Start
-    -->
+  <!-- Waves start -->
+  <section>
+    <div class="wave water"></div>
+    <div class="wave water"></div>
+    <div class="wave water"></div>
+    <div class="wave water"></div>
 
-    <section>
-      <div class="wave water"></div>
-      <div class="wave water"></div>
-      <div class="wave water"></div>
-      <div class="wave water"></div>
+  
+
+    <!-- Page Content -->
+    <div class="container">
+
+    <!-- Page Content ends here -->
+
+        <!-- Page Heading -->
+
+        <p></p>
+        <h1 class="my-4"><br> Roomify <br>
+        <small>New Room</small>
+        </h1>
+
+        <!-- Page Heading ends here -->
+
+        <!-- Rows -->
+    
+        <div class="row">
+        <div class="col-lg-4 col-sm-6 mb-4">
+            <form action="/newroom" method="POST" autocomplete="off">
+                <input name="name" placeholder="Room name" />
+                <input name="description" placeholder="Description" />
+                <input type="submit" />
+            </form>
+            <p id="error"><% if(typeof error !== "undefined"){ %><%= error %><% } %></p>
+              
+        </div>
+
+    </div>
 
     
-      <!-- Page Content -->
-      <div class="container">
+  </section>
+  <!-- Waves end -->  
 
-      <!-- Page Content ends here -->
-
-          <!-- Page Heading -->
-
-          <p></p>
-          <h1 class="my-4"><br> Roomify <br>
-          <small>Choose a chatroom!</small>
-          </h1>
-
-          <!-- Page Heading ends here -->
-
-          <!-- Rows -->
-      
-          <div class="row" id="rooms-div">
-            <% for(var i=0;i<rooms.length;i++){ %>
-          <div class="col-lg-4 col-sm-6 mb-4" id="room-card-<%= rooms[i]._id %>">
-              <div class="card h-100">
-              <a href="/chatroom?rid=<%= rooms[i]._id %>"><img class="card-img-top" src="/public/assets/indexPictures/0.jpg" alt=""></a>
-              <div class="card-body">
-                  <h4 class="card-title">
-                  <a href="/chatroom?rid=<%= rooms[i]._id %>"><%= rooms[i].name %></a>
-                  </h4>
-                  <p class="card-text"><%= rooms[i].description %></p>
-                  <p class="card-text">Active users: <span class="user-count"><%= rooms[i].activeUsers.length %></span></p>
-              </div>
-              </div>
-          </div>
-          <% } %>
-          
-          </div>
-          <!-- /.row -->
-
-
-          <!-- Page Heading
-
-          <p></p>
-          <h1 class="my-4"><br> <br>
-          <small>Create new rooms</small>
-          </h1>
-        -->
-          <!-- Page Heading ends here -->
-              <h3><a href="/newroom">Create a new chatroom</a></h3>
-      </div>
-    </section>
-
-    <!--
-      Waves End
-    -->  
 </body>
 
   <!-- Footer -->
@@ -139,5 +111,6 @@
     </div>
   </footer>
   <!-- Footer ends-->
+<!-- Footer ends-->
 
-</html>
+</html> 
