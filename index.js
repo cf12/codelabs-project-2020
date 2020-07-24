@@ -10,6 +10,7 @@ const flash = require("express-flash");
 const { brotliCompressSync } = require("zlib");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const MongoStore = require("connect-mongo")(session);
 
 const app = express();
 const server = http.createServer(app);
@@ -143,6 +144,7 @@ const sessionMiddleware = session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
+  store: new MongoStore({ mongooseConnection: db }),
 });
 app.use(sessionMiddleware);
 
