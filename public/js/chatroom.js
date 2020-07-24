@@ -26,8 +26,8 @@ socket.on("userLeft", (username) => {
 
 $("document").ready(() => {
   //scroll to bottom
-  document.getElementById("chat-section").scrollTop = document.getElementById(
-    "chat-section"
+  document.getElementById("chat-output").scrollTop = document.getElementById(
+    "chat-output"
   ).scrollHeight;
 
   $(".timesent").each((index, value) => {
