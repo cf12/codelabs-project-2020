@@ -31,7 +31,6 @@ $("document").ready(() => {
   ).scrollHeight;
 
   $(".timesent").each((index, value) => {
-    console.log($(value).html());
     $(value).html(new Date(parseInt($(value).html())).toLocaleString());
   });
 
@@ -57,6 +56,13 @@ $("document").ready(() => {
   socket.on("message", (data) => {
     //get user's name, if message came from this user, add user-message else add bot-message
     $.get("/userinfo", { username: true }, (username) => {
+      let chatOutput = document.getElementById("chat-output");
+      //force scroll after new message if already at bottom
+      let forceScroll =
+        chatOutput.scrollHeight - chatOutput.offsetHeight ===
+        chatOutput.scrollTop;
+      console.log(forceScroll);
+
       if (data.name === username) {
         outputArea.append(`
     <div class='user-message'>
@@ -82,6 +88,10 @@ $("document").ready(() => {
       </div>
     </div>
   `);
+      }
+      //scroll to bottom
+      if (forceScroll) {
+        chatOutput.scrollTop = chatOutput.scrollHeight;
       }
     });
   });

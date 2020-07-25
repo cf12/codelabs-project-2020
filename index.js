@@ -374,13 +374,15 @@ chatRoom.on("connection", (socket) => {
                 }
               }
               //emit join
-              chatRoom.to(roomId).emit("userJoined", user.username);
-              setTimeout(() => {
-                io.emit("roomJoin", {
-                  id: roomId,
-                  userCount: roomUsers.users.length,
-                });
-              }, 500);
+              if (roomUsers) {
+                chatRoom.to(roomId).emit("userJoined", user.username);
+                setTimeout(() => {
+                  io.emit("roomJoin", {
+                    id: roomId,
+                    userCount: roomUsers.users.length,
+                  });
+                }, 500);
+              }
             }
           });
         }
