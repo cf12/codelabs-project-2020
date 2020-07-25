@@ -215,7 +215,7 @@ app.get("/chatroom", (req, res) => {
             fromThisUser: message.sender === req.user.username,
           });
         });
-        res.render("chatroom.ejs", { messages: messages });
+        res.render("chatroom.ejs", { messages: messages, room: room });
       }
     });
   }
