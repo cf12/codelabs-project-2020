@@ -215,7 +215,7 @@ app.get("/chatroom", (req, res) => {
             fromThisUser: message.sender === req.user.username,
           });
         });
-        res.render("chatroom.ejs", { messages: messages });
+        res.render("chatroom.ejs", { messages: messages, room: room });
       }
     });
   }
@@ -374,13 +374,15 @@ chatRoom.on("connection", (socket) => {
                 }
               }
               //emit join
-              chatRoom.to(roomId).emit("userJoined", user.username);
-              setTimeout(() => {
-                io.emit("roomJoin", {
-                  id: roomId,
-                  userCount: roomUsers.users.length,
-                });
-              }, 500);
+              if (roomUsers) {
+                chatRoom.to(roomId).emit("userJoined", user.username);
+                setTimeout(() => {
+                  io.emit("roomJoin", {
+                    id: roomId,
+                    userCount: roomUsers.users.length,
+                  });
+                }, 500);
+              }
             }
           });
         }

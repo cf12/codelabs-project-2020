@@ -87,7 +87,7 @@
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="index.ejs">Roomify</a>
+      <a class="navbar-brand" href="/">Roomify</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -102,16 +102,16 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="home.ejs"
+            <a class="nav-link" href="/"
               >Home
               <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="login.ejs">Log In</a>
+            <a class="nav-link" href="/login">Log In</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="register.ejs">Register</a>
+            <a class="nav-link" href="/register">Register</a>
           </li>
         </ul>
       </div>
@@ -169,7 +169,7 @@
           <form
             class="contact1-form validate-form"
             method="POST"
-            action="/login"
+            action="/register"
             autocomplete="off"
           >
             <span class="contact1-form-title">
@@ -201,6 +201,8 @@
               />
               <span class="shadow-input1"></span>
             </div>
+
+            <div id="form-error"><% if(typeof error !== "undefined"){ %><%= error %><% } %></div>
 
             <!-- This input has no functionality <div class="wrap-input1 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
             <input class="input1" type="text" name="password" placeholder="Confirm Password">
@@ -261,9 +263,9 @@
   <footer id="sticky-footer" class="py-4 bg-dark text-white-50">
     <div class="container text-center">
       
-      <small><a href="index.ejs" style="color:white;" font-family="arial;"><br>Home</a></small>
-      <small><a href="newroom.ejs" style="color:white;" font-family="arial;"><br>Create a Room</a></small>
-      <small><a href="register.ejs" style="color:white;" font-family="arial;"><br>Log In</a></small>
+      <small><a href="/" style="color:white;" font-family="arial;"><br>Home</a></small>
+      <small><a href="/newroom" style="color:white;" font-family="arial;"><br>Create a Room</a></small>
+      <small><a href="/register" style="color:white;" font-family="arial;"><br>Log In</a></small>
       <small><br>Copyright &copy; Roomify 2020 <br></small>
       <img src="/public/assets/images/img-01.png" alt="IMG" width="150"/>
     </div>

@@ -40,7 +40,7 @@
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="index.ejs">Roomify</a>
+      <a class="navbar-brand" href="/">Roomify</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -55,7 +55,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="index.ejs"
+            <a class="nav-link" href="/"
               >Home
               <span class="sr-only">(current)</span>
             </a>
@@ -78,7 +78,7 @@
   <body>
 
     <!-- Waves start -->
-    <section id="chat-section">
+    <section>
       <!--<div class="wave water"></div>
       <div class="wave water"></div>
       <div class="wave water"></div>
@@ -95,8 +95,8 @@
         <p></p>
         <h1 class="my-4">
           <br />
-          Roomify <br />
-          <!-- Show Room name and description here maybe? <small id="room-name">You have joined a room</small>-->
+          Roomify<br />
+          <small><%= room.name %></small>
         </h1>
 
         <!-- Page Heading ends here -->
@@ -149,9 +149,9 @@
   <footer id="sticky-footer" class="py-4 bg-dark text-white-50">
     <div class="container text-center">
       
-      <small><a href="index.ejs" style="color:white;" font-family="arial;"><br>Home</a></small>
-      <small><a href="newroom.ejs" style="color:white;" font-family="arial;"><br>Create a Room</a></small>
-      <small><a href="register.ejs" style="color:white;" font-family="arial;"><br>Log In</a></small>
+      <small><a href="/" style="color:white;" font-family="arial;"><br>Home</a></small>
+      <small><a href="/newroom" style="color:white;" font-family="arial;"><br>Create a Room</a></small>
+      <small><a href="/register" style="color:white;" font-family="arial;"><br>Log In</a></small>
       <small><br>Copyright &copy; Roomify 2020 <br></small>
       <img src="/public/assets/images/img-01.png" alt="IMG" width="150"/>
     </div>
