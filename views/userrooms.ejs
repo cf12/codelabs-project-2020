@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title>Home || Roomify</title>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <!-- Link here -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="/public/css/userrooms.css" />
+
+    <script src="/public/js/userrooms.js"></script>
+    <!-- Link here ends -->
+  </head>
+
+  <!-- Nav Bar -->
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Roomify</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarResponsive"
+        aria-controls="navbarResponsive"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/"
+              >Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/newroom">Create Room</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/userrooms">My Rooms</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Log Out</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Navbar ends here -->
+  <!-- Rooms, needs styling -->
+  <body>
+    <% for(var i = 0; i < rooms.length; i++){ %>
+    <div class="room-div">
+      <div><%= rooms[i].name %></div>
+      <div><%= rooms[i].description %></div>
+      <button id="<%= rooms[i]._id %>" class="btn btn-danger delete-button">
+        Delete Room
+      </button>
+    </div>
+    <% } %>
+  </body>
+
+  <!-- Footer -->
+  <footer id="sticky-footer" class="py-4 bg-dark text-white-50">
+    <div class="container text-center">
+      <small
+        ><a href="/" style="color: white;" font-family="arial;"
+          ><br />Home</a
+        ></small
+      >
+      <small
+        ><a href="/newroom" style="color: white;" font-family="arial;"
+          ><br />Create a Room</a
+        ></small
+      >
+      <small
+        ><a href="/register" style="color: white;" font-family="arial;"
+          ><br />Log In</a
+        ></small
+      >
+      <small><br />Copyright &copy; Roomify 2020 <br /></small>
+      <img src="/public/assets/images/img-01.png" alt="IMG" width="150" />
+    </div>
+  </footer>
+  <!-- Footer ends-->
+</html>

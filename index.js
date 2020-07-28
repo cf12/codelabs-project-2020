@@ -84,6 +84,16 @@ const addRoom = function (name, description, creator, callback) {
   });
 };
 
+const deleteRoom = function (id, callback) {
+  Room.deleteOne({ _id: id }, (err, room) => {
+    if (err) {
+      callback(false);
+    } else {
+      callback(true);
+    }
+  });
+};
+
 const getRoomById = function (id, callback) {
   Room.findById(id, (room, err) => {
     callback((room, err));
@@ -206,6 +216,7 @@ app.get("/chatroom", (req, res) => {
       if (err) {
         res.redirect("/");
       } else {
+        //copy messages but specify if sender was this session's user
         let messages = [];
         room.messages.forEach((message) => {
           messages.push({
@@ -308,7 +319,6 @@ app.post("/newroom", (req, res) => {
       (err, room) => {
         if (!err) {
           req.app.io.emit("newRoom", room);
-          rooms.push(room);
         }
         res.redirect("/");
       }
@@ -322,6 +332,43 @@ app.get("/newroom", (req, res) => {
     res.redirect("/login");
   } else {
     res.render("newroom.ejs");
+  }
+});
+
+//user rooms
+app.get("/userrooms", (req, res) => {
+  if (!req.user) {
+    res.redirect("/login");
+  } else {
+    Room.find({ creator: req.user._id }, (err, roomList) => {
+      res.render("userrooms.ejs", { rooms: roomList });
+    });
+  }
+});
+
+//delete room
+app.get("/deleteroom", (req, res) => {
+  if (!req.user) {
+    res.send(false);
+  } else {
+    if (req.query.rid) {
+      //check if room belongs to this session's user
+      getRoomById(req.query.rid, (room, err) => {
+        if (err || !room || room.creator !== req.user._id.toString()) {
+          res.send(false);
+        } else {
+          deleteRoom(room._id, (success) => {
+            if (success) {
+              res.send(true);
+            } else {
+              res.send(false);
+            }
+          });
+        }
+      });
+    } else {
+      res.send(false);
+    }
   }
 });
 
@@ -394,10 +441,12 @@ chatRoom.on("connection", (socket) => {
     if (socket.room) {
       getRoomById(socket.room, (room, roomErr) => {
         if (!roomErr) {
+          //get joined room from rooms' active users
           roomUsers = roomsActiveUsers.find((r) => {
             return r.id === socket.room;
           });
 
+          //get this session's user
           getUserById(socket.userId, (user, userErr) => {
             let thisUser = roomUsers.users.find((u) => {
               return u.name === user.username;
