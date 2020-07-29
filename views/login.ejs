@@ -191,9 +191,16 @@
             action="/login"
             autocomplete="off"
           >
+
+            <% if(typeof message != "undefined"){ %>
+              <span class="contact1-form-title">
+                <%= message %>
+              </span>
+            <% }else{ %>
             <span class="contact1-form-title">
               Login to Your Roomify Account
             </span>
+              <% } %>
 
             <div
               class="wrap-input1 validate-input"
@@ -221,7 +228,7 @@
               <span class="shadow-input1"></span>
             </div>
 
-                        <div id="form-error"><% if(typeof messages.error !== "undefined"){ %><%= messages.error %><% } %></div>
+                        <div id="form-error" class="text-danger mb-3 ml-2"><% if(typeof messages.error !== "undefined"){ %><%= messages.error %><% } %></div>
 
             <!-- This input has no functionality <div class="wrap-input1 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
             <input class="input1" type="text" name="password" placeholder="Confirm Password">

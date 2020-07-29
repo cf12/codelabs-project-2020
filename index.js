@@ -167,10 +167,15 @@ io.use((socket, next) => {
 app.use(passport.initialize());
 app.use(passport.session());
 
+//this route
+app.get("/index", (req, res) => {
+  res.redirect("/");
+});
+
 //default route
 app.get("/", (req, res) => {
   if (!req.user) {
-    res.redirect("/login");
+    res.redirect("/login?message=forbidden");
   } else {
     Room.find({}, (err, roomList) => {
       if (!err) {
@@ -208,7 +213,7 @@ app.get("/", (req, res) => {
 //room route
 app.get("/chatroom", (req, res) => {
   if (!req.user) {
-    res.redirect("/login");
+    res.redirect("/login?message=forbidden");
   } else if (!req.query.rid) {
     res.redirect("/");
   } else {
@@ -253,7 +258,13 @@ app.post(
 
 //login route
 app.get("/login", (req, res) => {
-  res.render("login.ejs");
+  if (req.query.message === "forbidden") {
+    res.render("login.ejs", {
+      message: "You must log in to access that page",
+    });
+  } else {
+    res.render("login.ejs");
+  }
 });
 
 //register route
@@ -297,18 +308,27 @@ app.post("/register", (req, res) => {
   }
 });
 
-//log out
-app.get("/logout", (req, res) => {
+//log out route
+app.get("/loggingout", (req, res) => {
   if (req.user) {
     req.logout();
   }
   res.redirect("/login");
 });
 
+//log out page
+app.get("/logout", (req, res) => {
+  if (req.user) {
+    res.render("logout.ejs");
+  } else {
+    res.redirect("/login");
+  }
+});
+
 //new room form
 app.post("/newroom", (req, res) => {
   if (!req.user) {
-    res.redirect("/login");
+    res.redirect("/login?message=forbidden");
   } else if (!req.body.name) {
     res.render("newroom.ejs", { error: "Name field required" });
   } else {
@@ -329,7 +349,7 @@ app.post("/newroom", (req, res) => {
 //new room get route
 app.get("/newroom", (req, res) => {
   if (!req.user) {
-    res.redirect("/login");
+    res.redirect("/login?message=forbidden");
   } else {
     res.render("newroom.ejs");
   }
@@ -338,10 +358,10 @@ app.get("/newroom", (req, res) => {
 //user rooms
 app.get("/userrooms", (req, res) => {
   if (!req.user) {
-    res.redirect("/login");
+    res.redirect("/login?message=forbidden");
   } else {
     Room.find({ creator: req.user._id }, (err, roomList) => {
-      res.render("userrooms.ejs", { rooms: roomList });
+      res.render("userroom.ejs", { rooms: roomList });
     });
   }
 });
