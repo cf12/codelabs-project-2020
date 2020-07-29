@@ -1,1 +1,235 @@
 <!-- If given the time, you can work on it? -->
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <title>Logout || Roomify</title>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <!-- Link here -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+
+    <link rel="stylesheet" href="/public/css/login.css" />
+
+
+    <link rel="icon" type="image/png" href="/public/assets/logo/logo_no_bg.png" />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/public/css/login/vendor/bootstrap/css/bootstrap.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/public/css/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+
+    <link rel="stylesheet" type="text/css" href="/public/css/login/vendor/animate/animate.css" />
+    
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/public/css/login/vendor/css-hamburgers/hamburgers.min.css"
+    />
+    
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/public/css/login/vendor/select2/select2.min.css"
+    />
+    
+    
+    <link rel="stylesheet" type="text/css" href="/public/css/login/util.css" />
+    <link rel="stylesheet" type="text/css" href="/public/css/login/main.css" />
+    
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+      crossorigin="anonymous"
+    ></script>
+    
+
+
+
+    <script src="/public/js/login.js"></script>
+
+    <script src="/public/css/login/vendor/jquery/jquery-3.2.1.min.js"></script>
+      
+    <script src="/public/css/login/vendor/bootstrap/js/popper.js"></script>
+    <script src="/public/css/login/vendor/bootstrap/js/bootstrap.min.js"></script>
+    
+    <script src="/public/css/login/vendor/select2/select2.min.js"></script>
+    
+    <script src="/public/css/login/vendor/tilt/tilt.jquery.min.js"></script>
+
+    <script src="/public/js/main.js"></script>
+
+    <!-- Link here ends -->
+  </head>
+
+  <!-- Nav Bar -->
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Roomify</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarResponsive"
+        aria-controls="navbarResponsive"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        
+        
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item active">
+            <a class="nav-link" href="/index">Home
+                  <span class="sr-only">(current)</span>
+                </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/newroom">Create Room</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/userrooms">My Rooms</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Log Out</a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link" href="/chatroom">Chatroom</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/register">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
+          </li>
+        
+        </ul>
+
+
+    </div>
+  </nav>
+
+  <!-- Navbar ends here -->
+
+  <!-- Remember to add buttons and proper descriptions! -->
+
+  <body>
+
+      <div class="contact1">
+        <div class="container-contact1">
+          <div class="contact1-pic js-tilt" data-tilt>
+            <img src="/public/assets/images/img-01.png" alt="IMG" />
+          </div>
+
+          <form
+            class="contact1-form validate-form"
+            method="POST"
+            action="/login"
+            autocomplete="off"
+          >
+            <span class="contact1-form-title">
+                Log Out
+            </span>
+
+                <span>
+                    <small>By clicking log out, the user is signed out of the account used to sign through Roomify.</small>
+                </span>
+
+
+            <div class="container-contact1-form-btn">
+              <button class="contact1-form-btn">
+                <span > 
+                  Confirm Request
+                  <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                </span>
+              </button>
+
+              <button class="contact1-form-btn">
+                <span > 
+                  Cancel Request
+                  <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                </span>
+              </button>
+
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+      <script>
+        $(".js-tilt").tilt({
+          scale: 1.1,
+        });
+      </script>
+
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"
+      ></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        gtag("js", new Date());
+
+        gtag("config", "UA-23581568-13");
+      </script>
+
+      
+      <!--
+        <a href="register.ejs"> Register </a>
+      -->
+      
+
+      <!--
+        </section>
+      -->
+    
+
+    <!-- Waves end -->
+  </body>
+
+  <!-- Footer -->
+  <footer id="sticky-footer" class="py-4 bg-dark text-white-50">
+    <div class="container text-center">
+      
+      <small><a href="/" style="color:white;" font-family="arial;"><br>Home</a></small>
+      <small><a href="/newroom" style="color:white;" font-family="arial;"><br>Create a Room</a></small>
+      <small><a href="/register" style="color:white;" font-family="arial;"><br>Log In</a></small>
+      <small><br>Copyright &copy; Roomify 2020 <br></small>
+      <img src="/public/assets/images/img-01.png" alt="IMG" width="150"/>
+    </div>
+  </footer>
+  <!-- Footer ends-->
+</html>
