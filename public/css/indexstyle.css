@@ -17,6 +17,17 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.newroom-link {
+  color: white;
+  font-weight: 360;
+}
+
+.newroom-link:hover {
+  color: #e0e0e0;
+  font-weight: 440;
+}
+
 section {
   position: relative;
   width: 100%;
