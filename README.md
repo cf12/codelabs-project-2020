@@ -3,7 +3,6 @@
 
 "A live web chat platform built on top of HTML, CSS, and JavaScript -- powered by Node.js and Socket.io. We played around with more advanced features like authentication, encryption, and webRTC as the weeks progress. A cool project to show how you can turn a semi-simple web application into a much more complex & intricate platform by building and abstracting on top of everything."
  
-
 ## Description
 * Roomify is a website that enables the user to interact with other users through chatting. 
 * In order to use the platform, the user must register an account or login into their personal account. When the user makes an account, their user information is stored in a database. The user can also logout their account if they would like to do so. 
@@ -29,4 +28,4 @@
 ## Links
 * [Figma UI Design](https://www.figma.com/file/QnqhHGmNXnQWLAlzWXWHKa/CodeLabs-2020?node-id=0%3A1)
 * [GitHub Repository](https://github.com/CF12/codelabs-project-2020)
-* [Website]()
+* [Website](http://roomify-chat.herokuapp.com/)
